@@ -1,4 +1,4 @@
-const mysql = require('./mysql');
+const mysql = require('../../classes/db/mysql');
 module.exports.getData= async (sql, current_page, num) => {
     current_page = (current_page && parseInt(current_page)) || 1; //默认为1
     num = num || 10; //一页条数

@@ -1,10 +1,10 @@
-const mysql = require('mysql');
-const commonUtil = require('./util/commonUtil');
+const mySQL = require('classes/db/mysql');
+const commonUtil = require('../../src/core/util/commonUtil');
 const config = require("../config/db_config").mysql;
-const logger = require("./logger").getLogger("system");
+const logger = require("../../src/core/logger").getLogger("system");
 logger.info("mysql config ", JSON.stringify(config));
 
-const pool = mysql.createPool(config);
+const pool = mySQL.createPool(config);
 pool.on('connection', (connection) => {
     //logger.info("connection!");
 });

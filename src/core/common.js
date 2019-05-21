@@ -1,5 +1,5 @@
 const stringUtils = require("./util/StringUtils");
-const mysql = require('./mysql');
+const mysql = require('../../classes/db/mysql');
 const log = require('../core/logger').getLogger("system");
 module.exports.saveLoginLog = async (req) => {
     var user = req.session.user;

@@ -1,6 +1,6 @@
 var ioRedis = require("ioredis");
 
-var commonUtil = require('./commonUtil');
+var commonUtil = require('../../src/core/util/commonUtil');
 var redisConfig = require(commonUtil.getConfigPath() + "/db_config").redis;
 
 var client = null;
