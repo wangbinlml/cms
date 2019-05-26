@@ -4,7 +4,7 @@ const stringUtils = require('./utils/StringUtils');
 const logger = require("./utils/logger").getLogger("system");
 var path = require('path');
 
-function CmsModule() {
+function Module() {
     // module id
     this.id;
     // module name
@@ -17,7 +17,7 @@ function CmsModule() {
     this.path = "";
 }
 
-CmsModule.prototype = {
+Module.prototype = {
     install: async function () {
         if (!stringUtils.isModuleName(this.name)) {
             return false;
@@ -82,20 +82,19 @@ CmsModule.prototype = {
      * Return an instance of the specified module
      *
      * @param string $moduleName Module name
-     * @return CmsModule instance
+     * @return Module instance
      */
-    getInstanceByName: function (app, moduleName) {
-        if (!fs.existsSync(process.cwd() + "/router/" + moduleName + '/' + moduleName + '.js'))
+    getInstanceByName: function (moduleName) {
+        if (!fs.existsSync(process.cwd() + "/themes/default/modules/" + moduleName + '/' + moduleName + '.js'))
             return false;
-        let router = require("../router/" + moduleName + '/' + moduleName + '.js');
-        logger.info("加载路由：" + moduleName);
-        app.use('/' + moduleName, router);
+        let moduleInstance = require("../themes/default/modules/" + moduleName + '/' + moduleName + '.js').instance();
+        return moduleInstance;
     },
     /**
      * Return an instance of the specified module
      *
      * @param integer $id_module Module ID
-     * @return CmsModule instance
+     * @return Module instance
      */
     getInstanceById: async function (id_module) {
         let result = await mysql.query('SELECT name FROM tb_module WHERE  id_module = ' + id_module);
@@ -116,7 +115,7 @@ CmsModule.prototype = {
 	 * @param array $hookArgs Parameters for the functions
 	 * @return string modules output
 	 */
-    hookExec: async function (app, hook_name, hookArgs, id_module) {
+    hookExec: async function (hook_name, hookArgs, id_module) {
         let sql = 'SELECT hm.`id_hook`, m.`name`, hm.`position` FROM `tb_module` m ' +
             'LEFT JOIN `tb_hook_module` hm ON hm.`id_module` = m.`id_module` ' +
             'LEFT JOIN `tb_hook` h ON h.`id_hook` = hm.`id_hook` ' +
@@ -125,16 +124,22 @@ CmsModule.prototype = {
         let result = await mysql.query(sql, hook_name);
         if (!result)
             return false;
+        let output = "";
         for (let i = 0; i < result.length; i++) {
             let module = result[i];
             let moduleName = module['name'];
-            this.getInstanceByName(app, moduleName);
+            let moduleInstance = this.getInstanceByName(moduleName);
+            if (!moduleInstance)
+                continue;
+            let func = 'hook'+hook_name;
+            output = output + await moduleInstance[func].call(hookArgs);
         }
+        return output;
     }
 };
 
 function instances() {
-    return new CmsModule();
+    return new Module();
 }
 
 module.exports.instances = instances;

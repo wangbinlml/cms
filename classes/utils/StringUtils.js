@@ -151,3 +151,24 @@ var readFile = function(path,filesList,targetObj)
 }
 
 module.exports.geFileList = geFileList;
+var renderFileSync = function(ejs, filename, data, options, cb){
+    if (typeof cb == "function") {
+        ejs.renderFile(filename, data, options, function (err, str) {
+            if (err) {
+                throw err;
+            }
+            cb(null, str);
+        });
+    } else {
+        return new Promise((resolve, reject) => {
+
+            ejs.renderFile(filename, data, options, function (err, str) {
+                if (err) {
+                    reject(err);
+                }
+                resolve(str);
+            });
+        });
+    }
+};
+module.exports.renderFileSync  = renderFileSync;
