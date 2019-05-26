@@ -1,7 +1,6 @@
-const mySQL = require('classes/db/mysql');
-const commonUtil = require('../../src/core/util/commonUtil');
-const config = require("../config/db_config").mysql;
-const logger = require("../../src/core/logger").getLogger("system");
+const mySQL = require('mysql');
+const config = require("../../config/db_config").mysql;
+const logger = require("../utils/logger").getLogger("system");
 logger.info("mysql config ", JSON.stringify(config));
 
 const pool = mySQL.createPool(config);

@@ -1,9 +1,9 @@
 {
   "mysql": {
-    "host": "39.105.24.201",
-    "user": "moves",
-    "password": "moves",
-    "database": "moves",
+    "host": "192.168.1.6",
+    "user": "root",
+    "password": "root",
+    "database": "cms",
     "port": 3306,
     "connectionLimit": 50,
     "acquireTimeout": 10000,
@@ -14,7 +14,7 @@
     "connect_info": [
       {
         "port": 6379,
-        "host": "192.168.3.6"
+        "host": "192.168.1.6"
       }
     ]
   }

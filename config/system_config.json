@@ -1,4 +1,7 @@
 {
   "application_port": 3000,
-  "session_time_out_minute": 360
+  "session_time_out_minute": 360,
+  "base_uri": "/cms/",
+  "theme_name": "default",
+  "themes_dir": "themes"
 }
