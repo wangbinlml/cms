@@ -40,7 +40,7 @@ BlockSearch.prototype = {
             stringUtil.renderFileSync(ejs, file, {}, {});
     }
 }
-;
+
 
 function instance() {
     return new BlockSearch();
