@@ -1,7 +1,4 @@
 const fs = require('fs');
-const mysql = require('./db/MySQL');
-const stringUtils = require('./utils/StringUtils');
-const logger = require("./utils/logger").getLogger("system");
 var path = require('path');
 
 function Module() {

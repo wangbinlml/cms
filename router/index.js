@@ -4,7 +4,7 @@ var mdl = require('../classes/Module').instances();
 /* GET home page. */
 router.get('/', async function (req, res, next) {
     var data = {
-        title: 'Express',
+        title: '首页-CMS',
         'HOOK_HEADER': await mdl.hookExec('Header'),
         'HOOK_LEFT_COLUMN': await mdl.hookExec('LeftColumn'),
         'HOOK_TOP': await mdl.hookExec('Top'),

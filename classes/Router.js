@@ -3,28 +3,43 @@ const mysql = require('./db/MySQL');
 const stringUtils = require('./utils/StringUtils');
 var express = require('express');
 var Module = require('../classes/Module');
-var router = express.Router();
-function Router() {
-    // module name
-    this.name;
-    // desc
-    this.desc = "";
+var mdl = require('../classes/Module').instances();
+
+function Router(app) {
+    this.app = app;
 }
 Router.prototype = {
-    combine: async function (req, res, next, dt) {
-        var module = new Module();
+    setAllRouter: function(app) {
+        var _self = this;
+        app.all("/*", async function (req, res, next) {
+            _self.homePage(req, res, next);
+        });
+    },
+    setRouter: async function(req, res, next) {
+
+    },
+    homePage: async function (req, res, next) {
+        res.header("Access-Control-Allow-Origin", "*");
+        res.header("Access-Control-Allow-Headers", "X-Requested-With");
+        res.header("Access-Control-Allow-Methods", "PUT,POST,GET,DELETE,OPTIONS");
+        var params = req.method == 'POST'? req.body: req.query;
         var data = {
-            title: 'Express',
-            'HOOK_HEADER': await module.hookExec('header'),
-            'HOOK_LEFT_COLUMN': await module.hookExec('leftColumn'),
-            'HOOK_TOP': await module.hookExec('top'),
-            'HOOK_HOME': await module.hookExec('home'),
-            'HOOK_RIGHT_COLUMN' : await module.hookExec('rightColumn'),
-            'HOOK_FOOTER': await module.hookExec('footer'),
+            title: '首页-CMS',
+            'HOOK_HEADER': await mdl.hookExec('Header', params),
+            'HOOK_LEFT_COLUMN': await mdl.hookExec('LeftColumn', params),
+            'HOOK_TOP': await mdl.hookExec('Top', params),
+            'HOOK_HOME': await mdl.hookExec('Home', params),
+            'HOOK_RIGHT_COLUMN': await mdl.hookExec('RightColumn', params),
+            'HOOK_FOOTER': await mdl.hookExec('Footer', params),
         };
-        data = Object.assign(data, dt);
-        res.render('index', data);
+        res.render('templates/index', data);
+
     }
+};
+
+function instances(app) {
+
+    return new Router(app);
 }
 
-module.exports = router;
+module.exports.getInstances = instances;

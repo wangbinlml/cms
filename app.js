@@ -1,12 +1,13 @@
 var createError = require('http-errors');
 var log4js = require('log4js');
 var express = require('express');
-var ejs = require('ejs')
+var ejs = require('ejs');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 
-var indexRouter = require('./router/index');
-var usersRouter = require('./router/users');
+var mysql = require('./classes/db/MySQL');
+var stringUtils = require('./classes/utils/StringUtils');
+const logger = require("./classes/utils/logger").getLogger("system");
 
 
 var app = express();
@@ -21,10 +22,18 @@ app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'themes/default')));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+//app.use('/', indexRouter);
+//app.use('/users', usersRouter);
+
+
+var router = require('./classes/Router').getInstances(app);
+router.setAllRouter(app);
+
 
 global.ejs = ejs;
+global.mysql = mysql;
+global.logger = logger;
+global.stringUtils = stringUtils;
 
 
 // catch 404 and forward to error handler
@@ -46,4 +55,5 @@ process.on('unhandledRejection', (err) => {
     console.log(err);
     process.exit(1);
 });
+
 module.exports = app;
