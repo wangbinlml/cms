@@ -3,5 +3,29 @@
 <head>
     <title><%= title %></title>
     <link rel='stylesheet' href='/assets/css/global.css' />
+    <%- HOOK_HEADER %>
 </head>
 <body>
+<!-- Header -->>
+<div id="header">
+    <div id="logo_width">
+        <div id="logo_cl">
+            <h1 id="logo"><a href="/" title="shop_name"><img src="{$img_ps_dir}logo.png" alt="{$shop_name}" /></a></h1>
+            <%- HOOK_TOP %>
+        </div>
+    </div>
+</div>
+<div id="page">
+    <!-- Left -->
+    <div id="left_column" class="column">
+        <%- HOOK_LEFT_COLUMN %>
+    </div>
+    <!-- Center -->
+    <div id="center_column">
+        <%- HOOK_HOME %>
+    </div>
+    <!-- Right -->
+    <div id="right_column" class="column">
+        {$HOOK_RIGHT_COLUMN}
+    </div>
+

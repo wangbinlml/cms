@@ -2,7 +2,7 @@ var path = require('path');
 var stringUtil = require('../../../../classes/utils/StringUtils');
 
 function BlockSearch() {
-    this.name = "";
+    this.name = "blocksearch";
     this.tab = "Blocks";
     this.version = 1.0;
 }
@@ -40,7 +40,7 @@ BlockSearch.prototype = {
             stringUtil.renderFileSync(ejs, file, {}, {});
     }
 }
-;
+
 
 function instance() {
     return new BlockSearch();
