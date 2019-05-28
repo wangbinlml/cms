@@ -38,6 +38,9 @@ BlockSearch.prototype = {
         let file = path.join(__dirname, 'blocksearch.ejs');
         return await
             stringUtil.renderFileSync(ejs, file, {}, {});
+    },
+    async hookTop(params) {
+        return await instance().hookHeader(params);
     }
 }
 

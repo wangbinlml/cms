@@ -132,7 +132,7 @@ Module.prototype = {
             if (!moduleInstance)
                 continue;
             let func = 'hook'+hook_name;
-            output = output + await moduleInstance[func].call(hookArgs);
+            output = output + await moduleInstance[func].call(moduleInstance, hookArgs);
         }
         return output;
     }

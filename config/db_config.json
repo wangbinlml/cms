@@ -1,8 +1,8 @@
 {
   "mysql": {
-    "host": "192.168.1.6",
-    "user": "root",
-    "password": "root",
+    "host": "192.168.1.153",
+    "user": "wbb",
+    "password": "wbb",
     "database": "cms",
     "port": 3306,
     "connectionLimit": 50,
@@ -14,7 +14,7 @@
     "connect_info": [
       {
         "port": 6379,
-        "host": "192.168.1.6"
+        "host": "192.168.1.153"
       }
     ]
   }
