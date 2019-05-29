@@ -86,7 +86,7 @@ Module.prototype = {
     getInstanceByName: function (moduleName) {
         if (!fs.existsSync(process.cwd() + "/themes/default/modules/" + moduleName + '/' + moduleName + '.js'))
             return false;
-        let moduleInstance = require("../themes/default/modules/" + moduleName + '/' + moduleName + '.js').instance();
+        let moduleInstance = require("../themes/default/modules/" + moduleName + '/' + moduleName + '.js').getInstance();
         return moduleInstance;
     },
 

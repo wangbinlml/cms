@@ -37,8 +37,6 @@ var app = express();
     // catch 404 and forward to error handler
     app.use(function (req, res, next) {
         next(createError(404));
-        res.status(err.status);
-        res.render('templates/404');
     });
 
     // error handler

@@ -65,4 +65,4 @@ function instance() {
     return new BlockChannels();
 }
 
-module.exports.instance = instance;
+module.exports.getInstance = instance;

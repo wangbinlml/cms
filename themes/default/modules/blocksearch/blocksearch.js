@@ -53,4 +53,4 @@ function instance() {
     return new BlockSearch();
 }
 
-module.exports.instance = instance;
+module.exports.getInstance = instance;
