@@ -1,9 +1,10 @@
-var mysql = require('../../../../classes/db/MySQL');
-var stringUtils = require('../../../../classes/utils/StringUtils');
+const mysql = require('../../../../classes/db/MySQL');
+const stringUtils = require('../../../../classes/utils/StringUtils');
 
 function BlockChannels() {
     this.name = "blockchannels";
     this.tab = "Blocks";
+    this.path = "channels";
     this.version = 1.0;
 }
 
@@ -11,19 +12,19 @@ BlockChannels.prototype = {
     createCategoryTree(data, params) {
         let flag;
         let str = '';
-        for (var i = 0; i < data.length; i++) {
-            var nodeText = data[i]['channel_name'];
-            var nodeId = data[i]['id'];
-            var parentId = data[i]['parent_id'];
-            var link = data[i]['link'];
-            var is_blank = data[i]['is_blank'];
-            var channel_path = data[i]['channel_path'];
-            var children = data[i]['children'];
-            var href = '/channels?cid='+nodeId+"&pid="+parentId;
+        for (let i = 0; i < data.length; i++) {
+            let nodeText = data[i]['channel_name'];
+            let nodeId = data[i]['id'];
+            let parentId = data[i]['parent_id'];
+            let link = data[i]['link'];
+            let is_blank = data[i]['is_blank'];
+            let channel_path = data[i]['channel_path'];
+            let children = data[i]['children'];
+            let href = '/channels?cid='+nodeId+"&pid="+parentId;
             if(link) {
                 href = link;
             }
-            var active = "";
+            let active = "";
             if(params && (params.cid == nodeId || params.pid == nodeId)) {
                 active = 'active';
             }

@@ -1,5 +1,5 @@
 const fs = require('fs');
-var path = require('path');
+const path = require('path');
 
 function Module() {
     // module id
@@ -12,6 +12,8 @@ function Module() {
     this.desc = "";
     // module web path (eg. '/cms/modules/modulename/')
     this.path = "";
+
+    this.routers = {};
 }
 
 Module.prototype = {
@@ -87,6 +89,20 @@ Module.prototype = {
         let moduleInstance = require("../themes/default/modules/" + moduleName + '/' + moduleName + '.js').instance();
         return moduleInstance;
     },
+
+    /**
+     * Return an instance of the specified module
+     *
+     * @param string $moduleName Module name
+     * @return Module instance
+     */
+    getRouterInstanceByName: function (moduleName) {
+        if (!fs.existsSync(process.cwd() + "/themes/default/modules/" + moduleName + '/router.js'))
+            return false;
+        let router = require("../themes/default/modules/" + moduleName + '/router.js');
+        return router;
+    },
+
     /**
      * Return an instance of the specified module
      *
@@ -112,7 +128,7 @@ Module.prototype = {
 	 * @param array $hookArgs Parameters for the functions
 	 * @return string modules output
 	 */
-    hookExec: async function (hook_name, hookArgs, id_module) {
+    hookExec: async function (hook_name, hookArgs, init_router, id_module) {
         let sql = 'SELECT hm.`id_hook`, m.`name`, hm.`position` FROM `tb_module` m ' +
             'LEFT JOIN `tb_hook_module` hm ON hm.`id_module` = m.`id_module` ' +
             'LEFT JOIN `tb_hook` h ON h.`id_hook` = hm.`id_hook` ' +
@@ -130,6 +146,13 @@ Module.prototype = {
                 continue;
             let func = 'hook'+hook_name;
             output = output + await moduleInstance[func].call(moduleInstance, hookArgs);
+
+            if(init_router) {
+                let router = this.getRouterInstanceByName(moduleName);
+                if (router) {
+                    this.routers[moduleInstance.path] = router;
+                }
+            }
         }
         return output;
     }

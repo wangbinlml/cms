@@ -1,8 +1,8 @@
-var crypto = require("crypto");
-var fs = require("fs");
-var key = 'OxLYdFmu3YS1haMUcaBmGMBK0P7PbOqb'; //百度api的key
-var PASSWORD_SALT = "xxdddffffff";
-var SYSTEM_PASSWORD_SALT = "cmsxxx";
+const crypto = require("crypto");
+const fs = require("fs");
+const key = 'OxLYdFmu3YS1haMUcaBmGMBK0P7PbOqb'; //百度api的key
+const PASSWORD_SALT = "xxdddffffff";
+const SYSTEM_PASSWORD_SALT = "cmsxxx";
 
 /**
  * 根据指定字符串生成加密后的密码<br />
@@ -40,7 +40,7 @@ module.exports.md5 = function (text) {
 
 /*3.用正则表达式实现html转码*/
 module.exports.htmlEncodeByRegExp = function (str){
-    var s = "";
+    let s = "";
     if(str.length == 0) return "";
     s = str.replace(/&/g,"&amp;");
     s = s.replace(/</g,"&lt;");
@@ -52,7 +52,7 @@ module.exports.htmlEncodeByRegExp = function (str){
 }
 /*4.用正则表达式实现html解码*/
 module.exports.htmlDecodeByRegExp = function (str){
-    var s = "";
+    let s = "";
     if(str.length == 0) return "";
     s = str.replace(/&amp;/g,"&");
     s = s.replace(/&lt;/g,"<");
@@ -75,10 +75,10 @@ module.exports.isModuleName = function(moduleName) {
  * @param id int
  * return array
  * */
-var recursion = function(data, id) {
-    var list = [];
-    for(var index in data) {
-        var v = data[index];
+let recursion = function(data, id) {
+    let list = [];
+    for(let index in data) {
+        let v = data[index];
         if(v['parent_id'] == id) {
             v['children'] = recursion(data, v['id']);
             if(v['children'].length == 0) {
@@ -99,13 +99,13 @@ module.exports.recursion = recursion;
 
 function geFileList(path)
 {
-    var filesList = [];
-    var targetObj = {};
+    let filesList = [];
+    let targetObj = {};
     readFile(path,filesList,targetObj);
     return filesList;
 }
 //遍历读取文件
-var readFile = function(path,filesList,targetObj)
+let readFile = function(path,filesList,targetObj)
 {
     files = fs.readdirSync(path);//需要用到同步读取
     files.forEach(walk);
@@ -114,7 +114,7 @@ var readFile = function(path,filesList,targetObj)
         states = fs.statSync(path+'/'+file);
         if(states.isDirectory())
         {
-            var item ;
+            let item ;
             if(targetObj["children"])
             {
                 item = {name:file,children:[]};
@@ -131,19 +131,19 @@ var readFile = function(path,filesList,targetObj)
         else
         {
             //创建一个对象保存信息
-            var obj = new Object();
+            let obj = new Object();
             obj.size = states.size;//文件大小，以字节为单位
             obj.name = file;//文件名
             obj.path = path+'/'+file; //文件绝对路径
 
             if(targetObj["children"])
             {
-                var item = {name:file,value:obj.path}
+                let item = {name:file,value:obj.path}
                 targetObj["children"].push(item);
             }
             else
             {
-                var item = {name:file,value:obj.path};
+                let item = {name:file,value:obj.path};
                 filesList.push(item);
             }
         }
@@ -151,7 +151,7 @@ var readFile = function(path,filesList,targetObj)
 }
 
 module.exports.geFileList = geFileList;
-var renderFileSync = function(ejs, filename, data, options, cb){
+let renderFileSync = function(ejs, filename, data, options, cb){
     if (typeof cb == "function") {
         ejs.renderFile(filename, data, options, function (err, str) {
             if (err) {

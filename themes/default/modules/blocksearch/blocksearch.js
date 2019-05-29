@@ -1,9 +1,10 @@
-var path = require('path');
-var stringUtil = require('../../../../classes/utils/StringUtils');
+const path = require('path');
+const stringUtil = require('../../../../classes/utils/StringUtils');
 
 function BlockSearch() {
     this.name = "blocksearch";
     this.tab = "Blocks";
+    this.path = "search"
     this.version = 1.0;
 }
 
@@ -17,15 +18,15 @@ BlockSearch.prototype = {
         return true;
     },
     hookLeftColumn(params) {
-        var ejs = global.ejs;
+        let ejs = global.ejs;
     },
 
     hookRightColumn(params) {
-        var ejs = global.ejs;
+        let ejs = global.ejs;
     },
 
     hookTop(params) {
-        var ejs = global.ejs;
+        let ejs = global.ejs;
     },
     getContent() {
 
@@ -34,10 +35,13 @@ BlockSearch.prototype = {
 
     },
     async hookHeader(params) {
-        var ejs = global.ejs;
+        let ejs = global.ejs;
         let file = path.join(__dirname, 'blocksearch.ejs');
+        if(params.keyword == undefined) {
+            params.keyword = "";
+        }
         return await
-            stringUtil.renderFileSync(ejs, file, {}, {});
+            stringUtil.renderFileSync(ejs, file, params, {});
     },
     async hookTop(params) {
         return await instance().hookHeader(params);
