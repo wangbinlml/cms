@@ -9,7 +9,7 @@ function Blockhottopics() {
 }
 
 Blockhottopics.prototype = {
-    async hookLeftColumn(params) {
+    async hookHome(params) {
         let topics = await mysql.query('select distinct c.*, d.views from tb_topic a\n' +
             ' inner join tb_content_topic b on a.topic_id = b.topic_id' +
             ' inner join tb_content e on b.content_id = e.content_id' +

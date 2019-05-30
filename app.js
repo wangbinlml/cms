@@ -1,12 +1,13 @@
-var createError = require('http-errors');
-var log4js = require('log4js');
-var express = require('express');
-var ejs = require('ejs');
-var path = require('path');
-var cookieParser = require('cookie-parser');
+const createError = require('http-errors');
+const log4js = require('log4js');
+const express = require('express');
+const ejs = require('ejs');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const moment = require('moment');
 
-var mysql = require('./classes/db/MySQL');
-var stringUtils = require('./classes/utils/StringUtils');
+const mysql = require('./classes/db/MySQL');
+const stringUtils = require('./classes/utils/StringUtils');
 const logger = require("./classes/utils/logger").getLogger("system");
 
 global.ejs = ejs;
@@ -14,11 +15,12 @@ global.mysql = mysql;
 global.logger = logger;
 global.stringUtils = stringUtils;
 
-var app = express();
+const app = express();
 
 (async (app) => {
 
-// view engine setup
+    app.locals.moment = moment;
+    // view engine setup
     app.set('views', path.join(__dirname, 'themes/default'));
     app.set('view engine', 'ejs');
 
@@ -28,7 +30,7 @@ var app = express();
     app.use(cookieParser());
     app.use(express.static(path.join(__dirname, 'themes/default')));
 
-    var router = require('./classes/Router').getInstances(app);
+    const router = require('./classes/Router').getInstances(app);
     await router.initHook({}, true);
     router.setAllRouter();
 
