@@ -3,6 +3,8 @@ const mysql = require('./db/MySQL');
 const stringUtils = require('./utils/StringUtils');
 const express = require('express');
 const router = express.Router();
+const content = require('../router/content');
+const channels = require('../router/content');
 const Module = require('../classes/Module');
 const mdl = require('../classes/Module').instances();
 
@@ -46,7 +48,7 @@ Router.prototype = {
         for (let path in routers) {
             this.app.use("/" + path, routers[path]);
         }
-
+        this.app.use("/content", content);
     },
     homePage: async function (req, res, next) {
         res.header("Access-Control-Allow-Origin", "*");

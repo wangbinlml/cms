@@ -1,0 +1,38 @@
+<!-- Left -->
+<div id="left_column" class="column">
+
+</div>
+
+<!-- Center -->
+<div id="center_column">
+    <div class="row">
+
+    </div>
+</div>
+
+<!-- Right -->
+<div id="right_column" class="column">
+    <div class="row">
+        <div class="col-md-9">
+            <div class="panel">
+                <div class="panel-heading"><h2><%= data.title %></h2></div>
+                <div class="panel-body">
+                    <% if(data.type_id == 1) { %>
+                    <div class="content-inf">
+                        发布时间：<%= moment(data.release_date).format("YYYY-DD-MM HH:mm:ss") %>&nbsp;&nbsp;来源：本站原创&nbsp;&nbsp;浏览次数：<span
+                                id="views"><%= data.views %></span>
+                    </div>
+                    <div class="panel-body">
+                        <p><%= data.description %></p>
+                    </div>
+                        <div><%- data.txt %></div>
+
+                    <% } else if(data.type_id == 2 && data.images.length>0) { %>
+                        <% include _partials/album %>
+                    <%}%>
+                </div>
+            </div>
+        </div>
+        <%- HOOK_EXTRA_RIGHT_COLUMN %>
+    </div>
+</div>

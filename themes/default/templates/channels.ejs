@@ -1,0 +1,85 @@
+<% include _partials/header %>
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Left -->
+    <div id="left_column" class="column">
+
+    </div>
+
+    <!-- Center -->
+    <div id="center_column">
+        <div class="row">
+
+        </div>
+    </div>
+    <!-- Right -->
+    <div id="right_column" class="column">
+        <div class="row">
+            <div class="col-md-9">
+                <div class="panel">
+                    <div class="panel-heading"><h2><%= title %></h2></div>
+                    <div class="panel-body">
+                        <% data.data.forEach(function(item, index){ %>
+                            <% if(item.type_id == 1) { %>
+                                <div class="content-inf">
+                                    <a href="/content?content_id=<%=item['content_id']%>"> <%= item.title %></a>
+                                </div>
+                                <div class="panel-body">
+                                    <p><%= item.description %></p>
+                                </div>
+                                <% } else if(item.type_id == 2) { %>
+                                    <!-- 左对齐 -->
+                                    <div class="media">
+                                        <div class="media-left">
+                                            <img src="img_avatar1.png" class="media-object" style="width:60px">
+                                        </div>
+                                        <div class="media-body">
+                                            <h4 class="media-heading"><a href="/content?content_id=<%=item['content_id']%>"><%= item.title %></a></h4>
+                                            <p><%= item.description %></p>
+                                        </div>
+                                    </div>
+                                <%}%>
+                            <%})%>
+                        <div id="pagination" class="pagination">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <%- HOOK_EXTRA_RIGHT_COLUMN %>
+        </div>
+    </div>
+
+</div>
+<% include _partials/footer %>
+<input type="hidden" id="channel_id" value="<%=data.cid%>"/>
+<script src="/assets/js/bootstrap-paginator.min.js"></script>
+<script type="application/javascript">
+    $("#channel_id").val("<%= data.cid %>");
+    var options = {
+        currentPage:'<%= data.current_page %>'|| 1, //设置当前页，默认起始页为第一页
+        totalPages:'<%= data.total_pages %>', //总页数
+        numberOfPages:5, //设置控件显示的页码数,跟后台计算出来的总页数没多大关系
+        //bootstrapMajorVersion:3,//如果是bootstrap3版本需要加此标识，并且设置包含分页内容的DOM元素为UL,如果是bootstrap2版本，则DOM包含元素是DIV
+        useBootstrapTooltip:'true',//是否显示tip提示框
+        shouldShowPage:true,
+        itemTexts: function (type, page, current) {
+            switch (type) {
+                case "first":
+                    return "首页";
+                case "prev":
+                    return "上一页";
+                case "next":
+                    return "下一页";
+                case "last":
+                    return "末页";
+                case "page":
+                    return page;
+            }
+        },
+        pageUrl:function(type,page, current){
+            return '?cid='+$("#channel_id").val()+'&current_page='+page //为每个页码设置url访问请求链接，page为页码数
+        }
+    }
+    $('#pagination').bootstrapPaginator(options);
+</script>

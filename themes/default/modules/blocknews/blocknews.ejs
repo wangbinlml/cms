@@ -3,7 +3,7 @@
         <div class="panel-heading">热点聚焦</div>
         <div class="panel-body">
             <% for (var i = 0; i<news.length; i++){ %>
-            <p><a href=""><%=news[i]['title']%></a><label style="float: right;"><%=moment(news[i]['release_date']).format('MM-DD')%></label></p>
+            <p><a href="/content?content_id=<%=news[i]['content_id']%>"><%=news[i]['title']%></a><label style="float: right;"><%=moment(news[i]['release_date']).format('MM-DD')%></label></p>
             <p><%=news[i]['description']%></p>
             <% } %>
         </div>

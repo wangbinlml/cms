@@ -3,7 +3,7 @@
         <div class="panel-heading">视频新闻</div>
         <div class="panel-body">
             <% for (var i = 0; i<vidoes.length; i++){ %>
-            <h5><a href=""><%=i+1%>: <%=vidoes[i]['title']%></a></h5>
+            <h5><a href="/content?content_id=<%=vidoes[i]['content_id']%>"><%=i+1%>: <%=vidoes[i]['title']%></a></h5>
             <p><%=vidoes[i]['description']%></p>
             <% } %>
         </div>

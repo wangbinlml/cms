@@ -3,7 +3,7 @@
         <div class="panel-heading">热门话题</div>
         <div class="panel-body">
             <% for (var i = 0; i<topics.length; i++){ %>
-            <h5><a href="">. <%=topics[i]['title']%></a></h5>
+            <h5><a href="/content?content_id=<%=topics[i]['content_id']%>">. <%=topics[i]['title']%></a></h5>
             <% } %>
         </div>
     </div>

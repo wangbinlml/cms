@@ -17,8 +17,11 @@ Blockhottopics.prototype = {
             ' inner join tb_content_count d on b.content_id=d.content_id' +
             ' order by  d.views desc limit 10;');
         let file = path.join(__dirname, 'blockhottopics.ejs');
-        return await
-            stringUtil.renderFileSync(ejs, file, {topics: topics}, {});
+        let html = await stringUtil.renderFileSync(ejs, file, {topics: topics}, {})
+        return html;
+    },
+    async hookExtraRight(param) {
+        return await instance().hookHome();
     }
 }
 
