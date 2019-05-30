@@ -10,6 +10,10 @@ const mysql = require('./classes/db/MySQL');
 const stringUtils = require('./classes/utils/StringUtils');
 const logger = require("./classes/utils/logger").getLogger("system");
 
+//ejs.cache = false;
+ejs.compileDebug = false;
+ejs.debug = true;
+
 global.ejs = ejs;
 global.mysql = mysql;
 global.logger = logger;
@@ -23,12 +27,14 @@ const app = express();
     // view engine setup
     app.set('views', path.join(__dirname, 'themes/default'));
     app.set('view engine', 'ejs');
-
+    app.set('view cache', true);
     app.use(log4js.connectLogger(log4js.getLogger("express")));
-    app.use(express.json());
+    app.use(express.json());// for parsing application/json
     app.use(express.urlencoded({extended: false}));
     app.use(cookieParser());
     app.use(express.static(path.join(__dirname, 'themes/default')));
+    app.use(express.static(path.join(__dirname, 'public')));
+    app.use(express.static(path.join(__dirname, 'uploads')));
 
     const router = require('./classes/Router').getInstances(app);
     await router.initHook({}, true);
