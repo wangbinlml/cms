@@ -1,5 +1,6 @@
 const crypto = require("crypto");
 const fs = require("fs");
+const axios = require("axios");
 const key = 'OxLYdFmu3YS1haMUcaBmGMBK0P7PbOqb'; //百度api的key
 const PASSWORD_SALT = "xxdddffffff";
 const SYSTEM_PASSWORD_SALT = "cmsxxx";
@@ -172,3 +173,17 @@ let renderFileSync = function(ejs, filename, data, options, cb){
     }
 };
 module.exports.renderFileSync  = renderFileSync;
+
+module.exports.getLocations = async function (ip) {
+    var ip = ip ? ip.replace("::ffff:", "") : "";
+    if (ip) {
+        // 向远程服务器端发送请求
+        var str = await axios.get('https://api.map.baidu.com'+'/location/ip?ak=' + key + "&coor=bd09ll&ip=" + ip, "");
+        if (str.status == 200 && str.data.status !=2 && str.data.status !=1) {
+            return JSON.stringify(str.data);
+        }
+        return "";
+    } else {
+        return "";
+    }
+};

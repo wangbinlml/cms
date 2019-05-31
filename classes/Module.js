@@ -147,7 +147,7 @@ Module.prototype = {
             let func = 'hook'+hook_name;
             output = output + await moduleInstance[func].call(moduleInstance, hookArgs);
 
-            if(init_router) {
+            if(init_router && moduleInstance.path != "") {
                 let router = this.getRouterInstanceByName(moduleName);
                 if (router) {
                     this.routers[moduleInstance.path] = router;

@@ -4,7 +4,7 @@ const stringUtils = require('../../../../classes/utils/StringUtils');
 function BlockChannels() {
     this.name = "blockchannels";
     this.tab = "Blocks";
-    this.path = "channels";
+    this.path = "";
     this.version = 1.0;
 }
 

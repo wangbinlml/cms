@@ -1,0 +1,13 @@
+#mask_div {
+    top: 0;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #9d9d9d;
+    display: none;
+    opacity: 0.2;
+    left: -2px;
+}
+.zTreeDemoBackground {
+    overflow-x: auto;
+}

@@ -5,6 +5,8 @@ const ejs = require('ejs');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const moment = require('moment');
+const expressSession = require('express-session');
+const passport = require('./classes/passport');
 
 const mysql = require('./classes/db/MySQL');
 const stringUtils = require('./classes/utils/StringUtils');
@@ -36,6 +38,16 @@ const app = express();
     app.use(express.static(path.join(__dirname, 'public')));
     app.use(express.static(path.join(__dirname, 'uploads')));
 
+    // 使服务器支持session
+    app.use(expressSession({
+        secret: 'chenxun.org',
+        resave: false,
+        saveUninitialized: false
+    }));
+    // 初始化调用 passport
+    app.use(passport.initialize());
+    app.use(passport.session());
+
     const router = require('./classes/Router').getInstances(app);
     await router.initHook({}, true);
     router.setAllRouter();
@@ -55,7 +67,7 @@ const app = express();
 
         // render the error page
         res.status(err.status || 500);
-        res.render('templates/error', {error: 500, msg: err.message});
+        res.render('error', {error: 500, msg: err.message});
     });
 })(app);
 process.on('unhandledRejection', (err) => {
